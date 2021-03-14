@@ -1,0 +1,130 @@
+.body {
+  background-color: black;
+}
+
+.buttonss {
+  padding: 20px;
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.chat-window {
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 80%;
+  height: 70%;
+  margin: auto;
+  display: flex;
+  margin-top: 180px;
+  background-color: white;
+  border: 1px black solid;
+}
+
+.side-bar {
+  height: 100%;
+  width: 30%;
+  border: 1px solid black;
+  margin: 0;
+  padding: 0;
+}
+
+.message-input {
+  height: 30px;
+  background-color: white;
+  position: static;
+  display: flex;
+  justify-content: space-between;
+}
+
+.message-box {
+  float: right;
+  width: 60%;
+}
+
+#enter {
+  border: 1px solid black;
+  width: 30%;
+}
+
+#enter h2 {
+  text-align: center;
+  font-size: 100%;
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+#send {
+  width: 10%;
+  color: white;
+  background-color: rgb(78, 182, 78);
+}
+
+.side-bar h4 {
+  text-align: center;
+}
+
+.communities {
+  border: 1px solid black;
+  height: 40%;
+  overflow-y: scroll;
+}
+
+.users {
+  border: 1px solid black;
+  height: 45%;
+  overflow-y: scroll;
+}
+
+.chat-side {
+  border: 2px solid black;
+}
+
+.chatss {
+  border: 2px solid black;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+
+.chats-side {
+  display: flex;
+}
+
+.input-side {
+  position: sticky;
+}
+
+.main-chats {
+  height: 95%;
+}
+
+.chat-message {
+  border: 1px solid black;
+  padding: 10px;
+  margin: 5px;
+  width: 300px;
+  border-radius: 20px;
+  background-color: rgb(132, 132, 255);
+  color: white;
+}
+
+.community-div {
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.user-div {
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
+}

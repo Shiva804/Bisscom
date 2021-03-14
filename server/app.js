@@ -1,10 +1,9 @@
 var app = require("express")();
-var http = require("http").Server(app);
-var io = require("socket.io")(http);
+
 const bodyparser = require("body-parser");
 const firebaseConfig = require("./config");
 
-var cors = require("cors");
+const cors = require("cors");
 
 require("firebase/firestore");
 
@@ -16,22 +15,14 @@ app.use(cors());
 
 const port = 5000;
 
-const rooms = [];
-
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/index.html");
 });
 
 app.post("/register", async (req, res) => {
-  const user = {
-    email: req.body.email,
-  };
-
   const CreateUser = await firebase
     .auth()
     .createUserWithEmailAndPassword(req.body.email, req.body.password);
-
-  const StoreUser = await firebase.firestore().collection("users").add(user);
 
   res.status(200).send("done");
 });
@@ -51,47 +42,123 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.all("/*", function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Content-type,Accept,X-Access-Token,X-Key"
-  );
-  if (req.method == "OPTIONS") {
-    res.status(200).end();
-  } else {
-    next();
-  }
+app.post("/userData", async (req, res) => {
+  const user = {
+    name: req.body.name,
+    communities: [],
+  };
+  console.log(user);
+
+  const postData = await firebase
+    .firestore()
+    .collection("users")
+    .doc(req.body.email)
+    .collection("userData")
+    .add(req.body);
+
+  const StoreUser = await firebase
+    .firestore()
+    .collection("names")
+    .doc(req.body.email)
+    .set(user);
+
+  console.log(postData);
+  res.status(200).send("done");
 });
 
-io.on("connection", function (socket) {
-  console.log("a user connected");
+app.post("/createCommunity", async (req, res) => {
+  console.log(req.body.communityname);
+  const data = await firebase
+    .firestore()
+    .collection("communities")
+    .doc(req.body.communityname)
+    .collection("users")
+    .add({ user: req.body.username });
 
-  socket.on("join_room", (room) => {
-    socket.join(room);
-    rooms.push(room);
-    console.log(rooms);
-  });
+  const communitydata = await firebase
+    .firestore()
+    .collection("names")
+    .doc(req.body.email)
+    .get();
 
-  socket.on("message", ({ room, message }) => {
-    socket.to(room).emit("message", {
-      message,
-      name: "Friend",
-    });
+  let community = communitydata.data().communities;
 
-    console.log(room, message);
-  });
+  community.push(req.body.communityname);
 
-  socket.on("typing", ({ room }) => {
-    socket.to(room).emit("typing", "Someone is typing");
-  });
+  const updateCommunityList = await firebase
+    .firestore()
+    .collection("names")
+    .doc(req.body.email)
+    .set({ communities: community });
 
-  socket.on("stopped_tying", ({ room }) => {
-    socket.to(room).emit("stopped_tying");
-  });
+  res.send(updateCommunityList);
 });
 
-http.listen(port, function () {
+app.post("/fetchUser", async (req, res) => {
+  const data = await firebase
+    .firestore()
+    .collection("names")
+    .doc(req.body.email)
+    .get();
+
+  res.send(data.data().name);
+});
+
+app.post("/fetchCommunity", async (req, res) => {
+  const communitydata = await firebase
+    .firestore()
+    .collection("names")
+    .doc(req.body.email)
+    .get();
+
+  const community = communitydata.data().communities;
+
+  res.send(community);
+});
+
+app.post("/message", async (req, res) => {
+  console.log(req.body);
+
+  const message = await firebase
+    .firestore()
+    .collection("communities")
+    .doc(req.body.communityname)
+    .collection("message")
+    .add({ message: req.body.message });
+});
+
+app.post("/fetchCommunityUsers", async (req, res) => {
+  const user = await firebase
+    .firestore()
+    .collection("communities")
+    .doc(req.body.communityname)
+    .collection("users")
+    .get();
+
+  let users = [];
+  user.docs.map((doc) => {
+    users.push(doc.data().user);
+  });
+
+  res.send(users);
+});
+
+app.post("/getmessage", async (req, res) => {
+  const message = await firebase
+    .firestore()
+    .collection("communities")
+    .doc(req.body.communityname)
+    .collection("message")
+    .get();
+
+  let messages = [];
+  message.docs.map((doc) => {
+    messages.push(doc.data().message);
+  });
+
+  res.send(messages);
+});
+
+app.listen(port, function () {
   console.log(`listening on *:${port}`);
 });

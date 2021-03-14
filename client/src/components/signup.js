@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "../config";
 import { Redirect } from "react-router-dom";
 import auth from "../auth";
+
 export default class Signup extends Component {
   constructor(props) {
     super(props);
@@ -9,6 +10,7 @@ export default class Signup extends Component {
       email: null,
       password: null,
       redirect: null,
+      id: null,
     };
   }
 
@@ -35,8 +37,11 @@ export default class Signup extends Component {
         email: this.state.email,
         password: this.state.password,
       });
+
+      localStorage.setItem("email", this.state.email);
+
       auth.login(() => {
-        this.setState({ redirect: "/dashboard" });
+        this.setState({ redirect: "/customerDetails" });
       });
     }
     if (type == "login") {
@@ -49,6 +54,8 @@ export default class Signup extends Component {
 
       document.getElementById("log-email").value = "";
       document.getElementById("log-password").value = "";
+
+      localStorage.setItem("email", this.state.email);
 
       auth.login(() => {
         this.setState({ redirect: "/dashboard" });

@@ -3,7 +3,7 @@
 body {
   height: 100%;
   width: 100%;
-  background-color: #282828;
+  background-color: #d5d3e8;
 }
 
 .main-div {
@@ -61,8 +61,9 @@ body {
 }
 
 .signup-form {
-  width: 100%;
+  width: 50%;
   margin-left: 20px;
+  margin-top: 20px;
 }
 
 .form-input {
@@ -90,12 +91,13 @@ input:focus {
 }
 
 .signup-form-2 {
-  width: 100%;
+  width: 50%;
+  align-items: center;
 }
 
 .form-radio-group {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 
 .form-radio-group input {
@@ -103,15 +105,12 @@ input:focus {
 }
 
 .label-flex {
-  padding-top: 20px;
-}
-
-.form-select {
-  border: none;
+  padding-top: 50px;
 }
 
 .select-list select {
-  width: 100%;
+  width: 75%;
+  margin-left: 20px;
   height: 40px;
 }
 
@@ -124,7 +123,8 @@ input:focus {
 .form-submit {
   display: flex;
   width: 500px;
-  margin-top: 40px;
+  margin-top: 90px;
+  margin-left: 50px;
 }
 
 .submit {
@@ -156,8 +156,9 @@ input:focus {
 
 #reset {
   background: #fff;
-  color: #999;
-  border: 2px solid #ebebeb;
+  color: #c00707;
+  border: 2px solid #c22b2b;
+  outline: none;
 }
 #reset:hover {
   border: 2px solid #c22b2b;
@@ -168,4 +169,25 @@ input:focus {
 label {
   font-weight: 600;
   color: black;
+}
+
+@media (max-width: 1170px) {
+  .form-side {
+    display: none;
+  }
+  .main-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: fit-content;
+    margin-top: 10px;
+    padding-top: 70px;
+    padding-bottom: 70px;
+  }
+
+  .sidebyside {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }

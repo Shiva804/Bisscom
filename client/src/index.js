@@ -2,10 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 
-import Dashboard from "./pages/dashboard";
+import { Home } from "./pages/home";
+import { UserDetail } from "./pages/UserDetail";
 import App from "./App";
 import CustomerDetails from "./pages/customerDetails";
+
 import { ProtectedRoute } from "./protectedRoute";
+import Community from "./pages/community";
 
 const Routing = (
   <Router>
@@ -15,7 +18,7 @@ const Routing = (
         <ProtectedRoute
           path="/dashboard"
           exact
-          component={Dashboard}
+          component={Home}
         ></ProtectedRoute>
 
         <ProtectedRoute
@@ -23,6 +26,18 @@ const Routing = (
           exact
           component={CustomerDetails}
         ></ProtectedRoute>
+
+        <ProtectedRoute
+          path="/community"
+          exact
+          component={Community}
+        ></ProtectedRoute>
+        <ProtectedRoute
+          path="/userDetail"
+          exact
+          component={UserDetail}
+        ></ProtectedRoute>
+        <Route path="*" component={() => "404 NOT FOUND"}></Route>
       </Switch>
     </div>
   </Router>

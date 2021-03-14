@@ -1201,6 +1201,16 @@ a.socialIcon:hover,
   margin-top: 55px;
 }
 
+#logout {
+  background-color: rgb(252, 81, 81);
+  color: white;
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+}
+
 @media (max-width: 992px) {
   .signup-container {
     display: flex;

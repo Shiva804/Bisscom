@@ -4,7 +4,6 @@ import "./App.css";
 import Header from "./components/header";
 import Footer from "./components/footer";
 import Signup from "./components/signup";
-
 import aboutImage from "./img/Mitigate-COVID-19-Health-Risks-at-the-Check-out-1140x784.png";
 
 class App extends Component {
